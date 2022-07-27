@@ -1,0 +1,33 @@
+---
+asyncapi: "2.4.0"
+info:
+  title: Software Update Runner
+  version: 0.1.0
+  description: This service handles applying software updates, publishes status messages
+servers:
+  local:
+    url: aurora:4222
+    protocol: tcp
+    description: "Local server used during development and testing"
+channels:
+  pi/{pi_id}/event/software_update:
+    bindings:
+      nats:
+        is: requestReply
+        requestReply:
+          is: replier
+        bindingVersion: 0.1.0
+    parameters:
+      pi_id:
+        description: Raspberry Pi unique id
+        schema:
+          type: integer
+
+    subscribe:
+      message:
+        payload:
+          $ref: "../asyncapi-common.yaml#/components/schemas/SoftwareUpdateReply"
+    publish:
+      message:
+        payload:
+          $ref: "../asyncapi-common.yaml#/components/schemas/SoftwareUpdateRequest"

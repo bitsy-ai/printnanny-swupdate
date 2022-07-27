@@ -1,0 +1,61 @@
+components:
+  schemas:
+    SoftwareUpdateRequest:
+      x-parser-schema-id: SoftwareUpdateRequest
+      additionalProperties: false
+      type: object
+      required:
+        - display_name
+        - version
+        - checksum_txt_url
+        - checksum_txt_gpg_url
+        - swu_url
+        - manifest_url
+        - image_wic_url
+        - image_wic_bmap_url
+      properties:
+        display_name:
+          type: string
+          description: Pretty display name of release
+        version:
+          type: string
+          description: Semantic version of release
+        checksum_txt_url:
+          type: string
+          description: Link to sha256sums.txt
+        checksum_txt_gpg_url:
+          type: string
+          description: Link to sha256sums.txt.gpg
+        swu_url:
+          type: string
+          description: Link to rootfs .swu delta
+        manifest_url:
+          type: string
+          description: Link to .manifest
+        image_wic_url:
+          type: string
+          description: Link to full image .wic
+        image_wic_bmap_url:
+          type: string
+          description: Link to wic.bmap
+    SoftwareUpdateStatus:
+      x-parser-schema-id: SoftwareUpdateStatus
+      additionalProperties: false
+      enum:
+        - "Started"
+        - "Success"
+        - "Error"
+    SoftwareUpdateReply:
+      x-parser-schema-id: SoftwareUpdateReply
+      additionalProperties: false
+      type: object
+      required:
+        - status
+        - detail
+      properties:
+        status:
+          $ref: "#/components/schemas/SoftwareUpdateStatus"
+        detail:
+          type: string
+        exit_code:
+          type: integer

@@ -1,0 +1,21 @@
+{
+    "config": {
+        "example_name": "printnanny-swupdate-dispatch"
+    },
+    "scripts": {
+        "clean": "rm -rf asyncapi-nats-client",
+        "generate:client": "npm run clean && ag --output \"./asyncapi-nats-client\" \"asyncapi.yaml\" @asyncapi/ts-nats-template --force-write --param \"promisifyReplyCallback=true\" && cd ./asyncapi-nats-client && npm i && npm run build && cd ..",
+        "start": "ts-node index.ts",
+        "test": "jest --config=../jest.config.js index.spec.ts"
+    },
+    "dependencies": {
+        "@asyncapi/modelina": "^0.59.5",
+        "@asyncapi/parser": "^1.15.1",
+        "asyncapi-nats-client": "file:./asyncapi-nats-client"
+    },
+    "devDependencies": {
+        "@asyncapi/generator": "^1.9.5",
+        "@asyncapi/ts-nats-template": "^0.5.21",
+        "ts-node": "^10.9.1"
+    }
+}

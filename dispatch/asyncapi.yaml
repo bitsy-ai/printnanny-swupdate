@@ -1,0 +1,32 @@
+---
+asyncapi: "2.4.0"
+info:
+  title: Central Dispatch for Software Updates
+  version: 0.1.0
+  description: This service handles dispatching PrintNanny OS software update requests to an individual device
+servers:
+  local:
+    url: aurora:4222
+    protocol: tcp
+    description: "Local server used during development and testing"
+channels:
+  pi/{pi_id}/event/software_update:
+    bindings:
+      nats:
+        is: requestReply
+        requestReply:
+          is: requester
+        bindingVersion: 0.1.0
+    parameters:
+      pi_id:
+        description: Raspberry Pi deploy group id
+        schema:
+          type: integer
+    publish:
+      message:
+        payload:
+          $ref: "../asyncapi-common.yaml#/components/schemas/SoftwareUpdateReply"
+    subscribe:
+      message:
+        payload:
+          $ref: "../asyncapi-common.yaml#/components/schemas/SoftwareUpdateRequest"
