@@ -2,7 +2,7 @@
     "config": {
         "example_name": "printnanny-swupdate-dispatch"
     },
-    "version": "0.1.0",
+    "version": "0.2.0",
     "name": "printnanny-swupdate-runner",
     "scripts": {
         "clean": "rm -rf asyncapi-nats-client",
