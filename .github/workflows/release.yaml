@@ -10,6 +10,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 16
+      - run: docker-compose up -d
       - run: npm install
       - run: cd dispatch && npm run generate:client && npm install && npm test
       - uses: JS-DevTools/npm-publish@v1
@@ -23,6 +24,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 16
+      - run: docker-compose up -d
       - run: npm install
       - run: cd runner && npm run generate:client && npm install && npm test
       - uses: JS-DevTools/npm-publish@v1
