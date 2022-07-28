@@ -6,7 +6,7 @@ info:
   description: This service handles dispatching PrintNanny OS software update requests to an individual device
 servers:
   local:
-    url: aurora:4222
+    url: localhost:4222
     protocol: tcp
     description: "Local server used during development and testing"
 channels:
