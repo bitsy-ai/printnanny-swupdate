@@ -1,4 +1,6 @@
 {
+    "name": "printnanny-swupdate-dispatch",
+    "version": "0.1.0",
     "config": {
         "example_name": "printnanny-swupdate-dispatch"
     },
@@ -17,5 +19,7 @@
         "@asyncapi/generator": "^1.9.5",
         "@asyncapi/ts-nats-template": "^0.5.21",
         "ts-node": "^10.9.1"
-    }
+    },
+    "prepublish": "tsc",
+    "main": "./index.ts"
 }
