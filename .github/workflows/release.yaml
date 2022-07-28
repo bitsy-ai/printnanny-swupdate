@@ -10,8 +10,8 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 16
-      - run: cd dispatch && npm install
-      - run: cd dispatch && npm test
+      - run: npm install
+      - run: cd dispatch && npm run generate:client && npm install && npm test
       - uses: JS-DevTools/npm-publish@v1
         with:
           package: ./dispatch/package.json
@@ -23,8 +23,8 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 16
-      - run: cd runner && npm install
-      - run: cd runner && npm test
+      - run: npm install
+      - run: cd runner && npm run generate:client && npm install && npm test
       - uses: JS-DevTools/npm-publish@v1
         with:
           package: ./dispatch/package.json

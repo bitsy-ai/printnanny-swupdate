@@ -1,72 +1,12 @@
 import { NatsAsyncApiClient, SoftwareUpdateRequest, NatsTypescriptTemplateError, SoftwareUpdateReply } from 'asyncapi-nats-client';
+import { exit } from 'process';
 import SoftwareUpdateStatus from './asyncapi-nats-client/src/models/SoftwareUpdateStatus';
-import * as https from 'https';
-import * as fs from 'fs';
-import * as path from 'path';
-import * as url from 'url';
-import { spawn } from 'child_process';
-
+import { downloadUpdate, applyUpdate } from './download';
 /**
- * Send a request to turn on the specific streetlight.
+ * Send a request to turn on the specific Raspberry Pi
  */
 
-const piToListenFor = 1;
-
-const PRINTNANNY_PI_ID = process.env.PRINTNANNY_PI_ID;
-
-if (PRINTNANNY_PI_ID === undefined) {
-    console.error('PRINTNANNY_PI_ID is not set. Re-run with export PRINTNANNY_PI_ID="<PrintNanny Pi Unique Id>"')
-}
-const PRINTNANNY_TMP_DIR = process.env.PRINTNANNY_PI_ID || ".tmp";
-
-
-async function downloadToFile(outFile: string, swuUrl: string): Promise<string> {
-    const file = fs.createWriteStream(outFile);
-    return new Promise((resolve, reject) => {
-        https.get(swuUrl, function (response) {
-            response.pipe(file);
-            // after download completed close filestream
-            file.on("finish", () => {
-                file.close();
-                console.log(`Finished downloading ${swuUrl} to ${outFile}`);
-                resolve(outFile)
-            });
-        });
-    })
-
-}
-/**
- * Returns promise of downloaded filename
- * @param url 
- * @param version 
- */
-async function downloadUpdate(swuUrl: string): Promise<string> {
-    const urlParts = swuUrl.split('/');
-    const fileName = urlParts[urlParts.length - 1]
-    const outFile = path.resolve(PRINTNANNY_TMP_DIR, fileName)
-    // create outfile directories
-    await fs.promises.mkdir(outFile, { recursive: true }).catch(console.error);
-    return downloadToFile(outFile, swuUrl);
-}
-
-/**
- * Apply software update via swupdate-client CLI
- */
-function applyUpdate(fileName: string): void {
-    const cmd = spawn('swupdate', ['-v', '-i', fileName]);
-    cmd.stdout.on('data', (data) => {
-        console.log('swupdate: ', data)
-    });
-    cmd.stderr.on('data', (data) => {
-        console.error('swupdate: ', data)
-    });
-    cmd.on('close', (code) => {
-        console.log(`software update exited with ${code}`);
-    });
-}
-
-
-export async function sendRequest() {
+export async function sendReply() {
     const client = new NatsAsyncApiClient();
     await client.connectToLocal();
 
@@ -74,9 +14,16 @@ export async function sendRequest() {
         if (err) {
             console.log(err);
         }
+        const PRINTNANNY_TMP_DIR = process.env.PRINTNANNY_PI_ID || ".tmp";
+
         console.log(`Received ${msg?.marshal()} for pit ${pi_id}`);
         console.log(`Downloading ${msg?.swuUrl} to ${PRINTNANNY_TMP_DIR}`);
-        const fileName = await downloadUpdate(msg.swuUrl);
+
+        if (msg === undefined) {
+            console.error("failed to parse msg, got undefined")
+            exit(1)
+        }
+        const fileName = await downloadUpdate(msg?.swuUrl);
         applyUpdate(fileName);
         const replyMessage = new SoftwareUpdateReply({
             detail: "Starting software update",
@@ -88,7 +35,14 @@ export async function sendRequest() {
         return replyMessage;
     }
 
-    await client.replyToPiPiIdEventSoftwareUpdate(onRequest, (error) => { console.error(error); }, piToListenFor, undefined, { max: 1 });
+    let PRINTNANNY_PI_ID: number | undefined = process.env.PRINTNANNY_PI_ID === undefined ? undefined : parseInt(process.env.PRINTNANNY_PI_ID);
+
+    if (PRINTNANNY_PI_ID === undefined) {
+        console.error('PRINTNANNY_PI_ID is not set. Re-run with export PRINTNANNY_PI_ID="<PrintNanny Pi Unique Id>"')
+        exit(1)
+    }
+
+    await client.replyToPiPiIdEventSoftwareUpdate(onRequest, (error) => { console.error(error); }, PRINTNANNY_PI_ID, undefined, { max: 1 });
 }
 
-sendRequest();
+sendReply();
