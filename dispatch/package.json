@@ -11,6 +11,7 @@
         "test": "../node_modules/.bin/jest --config=../jest.config.js dispatch/index.spec.ts"
     },
     "dependencies": {
+        "printnanny-env": "file:../printnanny-env",
         "asyncapi-nats-client": "file:./asyncapi-nats-client"
     },
     "prepublish": "tsc",

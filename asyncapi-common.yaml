@@ -1,5 +1,11 @@
 components:
   schemas:
+    ReleaseChannel:
+      x-parser-schema-id: ReleaseChannel
+      type:
+        enum:
+          - "beta"
+          - "live"
     SoftwareUpdateRequest:
       x-parser-schema-id: SoftwareUpdateRequest
       additionalProperties: false

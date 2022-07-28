@@ -1,0 +1,11 @@
+{
+    "version": "0.1.0",
+    "name": "printnanny-env",
+    "scripts": {
+        "start": "ts-node index.ts",
+        "test": "../node_modules/.bin/jest --config=../jest.config.js runner/index.spec.ts"
+    },
+    "dependencies": {},
+    "prepublish": "tsc",
+    "main": "./index.ts"
+}
