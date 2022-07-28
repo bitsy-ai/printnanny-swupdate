@@ -31,6 +31,7 @@ jobs:
       - name: Dispatch Tests
         run: |
           npm install
+          docker-compose up -d
           cd dispatch && npm run generate:client && npm install && npm test
   runner-test:
     runs-on: ubuntu-latest
@@ -42,4 +43,5 @@ jobs:
       - name: Runner Tests
         run: |
           npm install
+          docker-compose up -d
           cd runner && npm run generate:client && npm install && npm test
