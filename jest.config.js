@@ -3,7 +3,7 @@ module.exports = {
   coverageReporters: [
     'json-summary',
     'lcov',
-    'text'
+    'text',
   ],
   preset: 'ts-jest',
   // The root of your source code, typically /src
@@ -19,6 +19,7 @@ module.exports = {
   testTimeout: 10000,
   collectCoverageFrom: [
     'template/**',
-    'utils/**'
-  ]
+    'utils/**',
+  ],
+  setupFiles: ['<rootDir>/.jest/setEnvVars.js'],
 };

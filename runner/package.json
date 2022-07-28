@@ -8,7 +8,7 @@
         "clean": "rm -rf asyncapi-nats-client",
         "generate:client": "npm run clean && ../node_modules/.bin/ag --output \"./asyncapi-nats-client\" \"asyncapi.yaml\" @asyncapi/ts-nats-template --force-write --param \"promisifyReplyCallback=true\" && cd ./asyncapi-nats-client && npm i && npm run build && cd ..",
         "start": "ts-node index.ts",
-        "test": "../node_modules/.bin/jest --config=../jest.config.js index.spec.ts"
+        "test": "../node_modules/.bin/jest --config=../jest.config.js runner/index.spec.ts"
     },
     "dependencies": {
         "asyncapi-nats-client": "file:./asyncapi-nats-client"

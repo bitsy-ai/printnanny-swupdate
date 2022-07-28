@@ -11,7 +11,7 @@ jobs:
         with:
           node-version: 16
       - run: npm install
-      - run: cd dispatch && npm test
+      - run: cd dispatch && npm run generate:client && npm install && npm test
       - uses: JS-DevTools/npm-publish@v1
         with:
           package: ./dispatch/package.json
@@ -24,7 +24,7 @@ jobs:
         with:
           node-version: 16
       - run: npm install
-      - run: cd runner && npm test
+      - run: cd runner && npm run generate:client && npm install && npm test
       - uses: JS-DevTools/npm-publish@v1
         with:
           package: ./dispatch/package.json
