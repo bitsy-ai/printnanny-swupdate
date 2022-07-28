@@ -10,9 +10,10 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 16
-      - run: docker-compose up -d
-      - run: npm install
-      - run: cd dispatch && npm run generate:client && npm install && npm test
+      - run: |
+          npm install
+          docker-compose up -d
+          cd dispatch && npm run generate:client && npm install && npm test
       - uses: JS-DevTools/npm-publish@v1
         with:
           package: ./dispatch/package.json
@@ -26,7 +27,10 @@ jobs:
           node-version: 16
       - run: docker-compose up -d
       - run: npm install
-      - run: cd runner && npm run generate:client && npm install && npm test
+      - run: |
+          docker-compose up -d
+          npm install
+          cd runner && npm run generate:client && npm install && npm test
       - uses: JS-DevTools/npm-publish@v1
         with:
           package: ./dispatch/package.json
