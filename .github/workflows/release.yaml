@@ -33,5 +33,5 @@ jobs:
           cd runner && npm run generate:client && npm install && npm test
       - uses: JS-DevTools/npm-publish@v1
         with:
-          package: ./dispatch/package.json
+          package: ./runner/package.json
           token: ${{ secrets.NPM_TOKEN }}
