@@ -6,20 +6,15 @@
     "name": "printnanny-swupdate-runner",
     "scripts": {
         "clean": "rm -rf asyncapi-nats-client",
-        "generate:client": "npm run clean && ag --output \"./asyncapi-nats-client\" \"asyncapi.yaml\" @asyncapi/ts-nats-template --force-write --param \"promisifyReplyCallback=true\" && cd ./asyncapi-nats-client && npm i && npm run build && cd ..",
+        "generate:client": "npm run clean && ../node_modules/.bin/ag --output \"./asyncapi-nats-client\" \"asyncapi.yaml\" @asyncapi/ts-nats-template --force-write --param \"promisifyReplyCallback=true\" && cd ./asyncapi-nats-client && npm i && npm run build && cd ..",
         "start": "ts-node index.ts",
-        "test": "jest --config=../jest.config.js index.spec.ts"
+        "test": "../node_modules/.bin/jest --config=../jest.config.js index.spec.ts"
     },
     "dependencies": {
-        "@asyncapi/modelina": "^0.59.5",
-        "@asyncapi/parser": "^1.15.1",
         "asyncapi-nats-client": "file:./asyncapi-nats-client"
     },
     "devDependencies": {
-        "@asyncapi/generator": "^1.9.5",
-        "@asyncapi/ts-nats-template": "^0.5.21",
-        "jest": "^28.1.3",
-        "ts-node": "^10.9.1"
+        "@types/asyncapi-nats-client": "file:./asyncapi-nats-client"
     },
     "prepublish": "tsc",
     "main": "./index.ts"

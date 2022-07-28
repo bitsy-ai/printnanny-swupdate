@@ -10,7 +10,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 16
-      - run: cd dispatch && npm install
+      - run: npm install
       - run: cd dispatch && npm test
       - uses: JS-DevTools/npm-publish@v1
         with:
@@ -23,7 +23,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 16
-      - run: cd runner && npm install
+      - run: npm install
       - run: cd runner && npm test
       - uses: JS-DevTools/npm-publish@v1
         with:
