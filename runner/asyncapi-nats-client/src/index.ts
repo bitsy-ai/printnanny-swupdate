@@ -112,11 +112,29 @@ export class NatsAsyncApiClient {
   }
   /**
    * Connects the client to the AsyncAPI server called local.
-   * Local server used during development and testing
+   * Local server used during local development and testing
    */
   async connectToLocal(codec ? : Nats.Codec < any > ) {
     await this.connect({
+      servers: ["localhost:4222"]
+    }, codec);
+  }
+  /**
+   * Connects the client to the AsyncAPI server called lan.
+   * LAN server used during integration development and e2e testing
+   */
+  async connectToLan(codec ? : Nats.Codec < any > ) {
+    await this.connect({
       servers: ["aurora:4222"]
+    }, codec);
+  }
+  /**
+   * Connects the client to the AsyncAPI server called live.
+   * NATS server used by live deployments
+   */
+  async connectToLive(codec ? : Nats.Codec < any > ) {
+    await this.connect({
+      servers: ["nats.live.printnanny.ai:4222"]
     }, codec);
   }
   /**

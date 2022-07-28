@@ -8,7 +8,15 @@ servers:
   local:
     url: localhost:4222
     protocol: tcp
-    description: "Local server used during development and testing"
+    description: "Local server used during local development and testing"
+  lan:
+    url: aurora:4222
+    protocol: tcp
+    description: "LAN server used during integration development and e2e testing"
+  live:
+    url: nats.live.printnanny.ai:4222
+    protocol: tcp
+    description: "NATS server used by live deployments"
 channels:
   pi/{pi_id}/event/software_update:
     bindings:
@@ -22,7 +30,6 @@ channels:
         description: Raspberry Pi unique id
         schema:
           type: integer
-
     subscribe:
       message:
         payload:

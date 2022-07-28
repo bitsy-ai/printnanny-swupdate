@@ -2,14 +2,25 @@ import { NatsAsyncApiClient, SoftwareUpdateRequest, NatsTypescriptTemplateError,
 import { exit } from 'process';
 import SoftwareUpdateStatus from './asyncapi-nats-client/src/models/SoftwareUpdateStatus';
 import { downloadUpdate, applyUpdate } from './download';
+import { getPrintNannyEnv } from '../printnanny-env';
+
 /**
  * Send a request to turn on the specific Raspberry Pi
  */
 
 export async function sendReply() {
     const client = new NatsAsyncApiClient();
-    await client.connectToLocal();
+    const printNannyEnv = getPrintNannyEnv()
 
+    switch (printNannyEnv.env) {
+        case "live":
+            await client.connectToLive();
+        case "lan":
+            await client.connectToLan();
+        case "local":
+        default:
+            await client.connectToLocal();
+    }
     const onRequest = async (err?: NatsTypescriptTemplateError, msg?: SoftwareUpdateRequest, pi_id?: Number): Promise<SoftwareUpdateReply> => {
         if (err) {
             console.log(err);

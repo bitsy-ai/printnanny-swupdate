@@ -17,7 +17,31 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: "16"
-      - name: Build UI
+      - name: Lint
         run: |
           npm install
           npm run lint
+  dispatch-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: "16"
+      - name: Dispatch Tests
+        run: |
+          npm install
+          docker-compose up -d
+          cd dispatch && npm run generate:client && npm install && npm test
+  runner-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: "16"
+      - name: Runner Tests
+        run: |
+          npm install
+          docker-compose up -d
+          cd runner && npm run generate:client && npm install && npm test

@@ -57,6 +57,8 @@ The generated client based on your AsyncAPI document.
     * [.connectWithUserPass(user, pass, options)](#NatsAsyncApiClient+connectWithUserPass)
     * [.connectToHost(host, options)](#NatsAsyncApiClient+connectToHost)
     * [.connectToLocal()](#NatsAsyncApiClient+connectToLocal)
+    * [.connectToLan()](#NatsAsyncApiClient+connectToLan)
+    * [.connectToLive()](#NatsAsyncApiClient+connectToLive)
     * [.replyToPiPiIdEventSoftwareUpdate(onRequest, onReplyError, pi_id, flush, options)](#NatsAsyncApiClient+replyToPiPiIdEventSoftwareUpdate)
 
 <a name="NatsAsyncApiClient+connect"></a>
@@ -123,7 +125,21 @@ Try to connect to the NATS server which has no authentication
 
 ### natsAsyncApiClient.connectToLocal()
 Connects the client to the AsyncAPI server called local.
-Local server used during development and testing
+Local server used during local development and testing
+
+**Kind**: instance method of [<code>NatsAsyncApiClient</code>](#NatsAsyncApiClient)  
+<a name="NatsAsyncApiClient+connectToLan"></a>
+
+### natsAsyncApiClient.connectToLan()
+Connects the client to the AsyncAPI server called lan.
+LAN server used during integration development and e2e testing
+
+**Kind**: instance method of [<code>NatsAsyncApiClient</code>](#NatsAsyncApiClient)  
+<a name="NatsAsyncApiClient+connectToLive"></a>
+
+### natsAsyncApiClient.connectToLive()
+Connects the client to the AsyncAPI server called live.
+NATS server used by live deployments
 
 **Kind**: instance method of [<code>NatsAsyncApiClient</code>](#NatsAsyncApiClient)  
 <a name="NatsAsyncApiClient+replyToPiPiIdEventSoftwareUpdate"></a>
@@ -160,6 +176,8 @@ The test/mirror client which is the reverse to the normal NatsAsyncApiClient.
     * [.connectWithUserPass(user, pass, options)](#NatsAsyncApiTestClient+connectWithUserPass)
     * [.connectToHost(host, options)](#NatsAsyncApiTestClient+connectToHost)
     * [.connectToLocal()](#NatsAsyncApiTestClient+connectToLocal)
+    * [.connectToLan()](#NatsAsyncApiTestClient+connectToLan)
+    * [.connectToLive()](#NatsAsyncApiTestClient+connectToLive)
     * [.requestPiPiIdEventSoftwareUpdate(requestMessage, pi_id)](#NatsAsyncApiTestClient+requestPiPiIdEventSoftwareUpdate)
 
 <a name="NatsAsyncApiTestClient+connect"></a>
@@ -226,7 +244,21 @@ Try to connect to the NATS server which has no authentication
 
 ### natsAsyncApiTestClient.connectToLocal()
 Connects the client to the AsyncAPI server called local.
-Local server used during development and testing
+Local server used during local development and testing
+
+**Kind**: instance method of [<code>NatsAsyncApiTestClient</code>](#NatsAsyncApiTestClient)  
+<a name="NatsAsyncApiTestClient+connectToLan"></a>
+
+### natsAsyncApiTestClient.connectToLan()
+Connects the client to the AsyncAPI server called lan.
+LAN server used during integration development and e2e testing
+
+**Kind**: instance method of [<code>NatsAsyncApiTestClient</code>](#NatsAsyncApiTestClient)  
+<a name="NatsAsyncApiTestClient+connectToLive"></a>
+
+### natsAsyncApiTestClient.connectToLive()
+Connects the client to the AsyncAPI server called live.
+NATS server used by live deployments
 
 **Kind**: instance method of [<code>NatsAsyncApiTestClient</code>](#NatsAsyncApiTestClient)  
 <a name="NatsAsyncApiTestClient+requestPiPiIdEventSoftwareUpdate"></a>
